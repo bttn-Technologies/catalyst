@@ -429,6 +429,8 @@ export const EditAddressForm = ({
 
           {reCaptchaSettings?.isEnabledOnStorefront && (
             <Field className="relative col-span-full max-w-full space-y-2 pb-7" name="ReCAPTCHA">
+              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+              {/* @ts-expect-error */}
               <ReCaptcha
                 onChange={onReCaptchaChange}
                 ref={reCaptchaRef}
