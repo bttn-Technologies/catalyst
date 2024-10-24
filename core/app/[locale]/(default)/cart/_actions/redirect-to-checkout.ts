@@ -1,11 +1,7 @@
 'use server';
 
-<<<<<<< HEAD
 import { getLocale } from 'next-intl/server';
 import { z } from 'zod';
-=======
-import { cookies } from 'next/headers';
->>>>>>> b4c40a5a (refactor(core): cart (#1400))
 
 import { getSessionCustomerId } from '~/auth';
 import { client } from '~/client';
