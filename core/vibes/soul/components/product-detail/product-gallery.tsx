@@ -37,7 +37,7 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
   };
 
   return (
-    <div className="relative mt-[60px] flex h-96 w-full items-center overflow-hidden bg-contrast-100 @2xl:h-[550px] @4xl:mt-0 @4xl:h-full">
+    <div className="bg-contrast-100 relative mt-[60px] flex h-96 w-full items-center overflow-hidden @2xl:h-[550px] @4xl:mt-0 @4xl:h-full">
       <div className="my-auto h-full max-h-[800px] w-full overflow-hidden" ref={emblaRef}>
         <div className="flex h-full w-full">
           {images.map((image, idx) => (
@@ -71,7 +71,7 @@ export const ProductGallery = ({ images }: ProductGalleryProps) => {
           >
             <BcImage
               alt={image.altText}
-              className="h-full w-full bg-contrast-100 object-cover"
+              className="bg-contrast-100 h-full w-full object-cover"
               height={256}
               src={image.src}
               width={256}

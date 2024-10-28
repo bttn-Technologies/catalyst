@@ -4,6 +4,8 @@ import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { clsx } from 'clsx';
 import { useState } from 'react';
 
+import { BcImage } from '~/components/bc-image';
+
 import { Button } from '@/vibes/soul/components/button';
 import { Counter } from '@/vibes/soul/components/counter';
 import { Favorite } from '@/vibes/soul/components/favorite';
@@ -12,7 +14,6 @@ import { Product } from '@/vibes/soul/components/product-card';
 import { Price } from '@/vibes/soul/components/product-card/price';
 import { ProductGallery } from '@/vibes/soul/components/product-detail/product-gallery';
 import { Rating } from '@/vibes/soul/components/rating';
-import { BcImage } from '~/components/bc-image';
 
 interface Image {
   altText: string;
@@ -41,16 +42,16 @@ export const ProductDetail = function ProductDetail({ product, action }: Product
   const [selectedSwatch, setSelectedSwatch] = useState(product.swatches?.[0] ?? null);
 
   return (
-    <section className="flex flex-col bg-background @container">
+    <section className="bg-background flex flex-col @container">
       <div className="mx-auto grid h-full w-full max-w-screen-2xl flex-grow @4xl:min-h-[800px] @4xl:grid-cols-2">
         <ProductGallery images={product.images ?? []} />
 
         {/* Product Details */}
-        <div className="my-auto flex flex-col gap-4 px-3 py-10 text-foreground @xl:px-6 @4xl:py-28 @5xl:px-20">
+        <div className="text-foreground my-auto flex flex-col gap-4 px-3 py-10 @xl:px-6 @4xl:py-28 @5xl:px-20">
           <h2 className="font-heading text-3xl font-medium leading-none">{product.name}</h2>
           <Rating rating={product.rating ?? 0} />
           {product.description != null && product.description !== '' && (
-            <p>{product.description}</p>
+            <div dangerouslySetInnerHTML={{ __html: product.description }} />
           )}
           <Price className="!text-2xl" price={product.price ?? ''} />
 

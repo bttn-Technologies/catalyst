@@ -8,7 +8,6 @@ import {
 } from '@radix-ui/react-dropdown-menu';
 import { clsx } from 'clsx';
 import { ArrowRight, ChevronDown, Search, SearchIcon, ShoppingBag, User } from 'lucide-react';
-import Image from 'next/image';
 import { forwardRef, Ref, useEffect, useRef, useState } from 'react';
 import ReactHeadroom from 'react-headroom';
 import { z } from 'zod';
@@ -17,6 +16,7 @@ import { Link } from '~/components/link';
 import { LocaleType, usePathname, useRouter } from '~/i18n/routing';
 
 import { HamburgerMenuButton } from './hamburguer-menu-button';
+import { BcImage } from '~/components/bc-image';
 
 interface Image {
   src?: string;
@@ -173,17 +173,17 @@ export const Header = forwardRef(function Header(
       upTolerance={0}
     >
       <div
-        className="relative mx-auto w-full max-w-screen-2xl text-foreground @4xl:mx-[max(20px,auto)] @4xl:mt-5"
+        className="text-foreground relative mx-auto w-full max-w-screen-2xl @4xl:mx-[max(20px,auto)] @4xl:mt-5"
         onMouseLeave={() => setNavOpen(false)}
         ref={ref}
       >
-        <nav className="relative grid h-[60px] grid-cols-[1fr,2fr,1fr] items-center justify-between bg-background shadow-[2px_4px_24px_#00000010] @4xl:mx-5 @4xl:rounded-3xl md:grid-cols-[1fr,1fr,1fr]">
+        <nav className="bg-background relative grid h-[60px] grid-cols-[1fr,2fr,1fr] items-center justify-between shadow-[2px_4px_24px_#00000010] @4xl:mx-5 @4xl:rounded-3xl md:grid-cols-[1fr,1fr,1fr]">
           {/* Top Level Nav Links */}
           <ul className="relative flex items-stretch pl-2.5" ref={container}>
             {links.map((item, i) => (
               <li key={i}>
                 <Link
-                  className="relative mx-0.5 my-2.5 hidden items-center whitespace-nowrap rounded-xl p-2.5 text-sm font-medium ring-primary transition-colors duration-200 hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2 @4xl:inline-flex"
+                  className="hover:bg-contrast-100 relative mx-0.5 my-2.5 hidden items-center whitespace-nowrap rounded-xl p-2.5 text-sm font-medium ring-primary transition-colors duration-200 focus-visible:outline-0 focus-visible:ring-2 @4xl:inline-flex"
                   href={item.href}
                   onKeyDown={(event) => {
                     if (event.key === 'Enter') {
@@ -216,7 +216,7 @@ export const Header = forwardRef(function Header(
             href="/"
           >
             {typeof logo === 'object' && logo.src != null && logo.src !== '' ? (
-              <Image
+              <BcImage
                 alt={logo.altText}
                 className="object-contain"
                 fill
@@ -225,7 +225,7 @@ export const Header = forwardRef(function Header(
               />
             ) : (
               typeof logo === 'string' && (
-                <span className="font-heading text-lg font-semibold leading-none text-foreground @xl:text-2xl">
+                <span className="font-heading text-foreground text-lg font-semibold leading-none @xl:text-2xl">
                   {logo}
                 </span>
               )
@@ -244,7 +244,7 @@ export const Header = forwardRef(function Header(
 
               <button
                 aria-label="Search"
-                className="rounded-lg p-1.5 ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-contrast-100"
+                className="@4xl:hover:bg-contrast-100 rounded-lg p-1.5 ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2"
                 onClick={() => {
                   setNavOpen(false);
                   setSearchOpen(!searchOpen);
@@ -255,14 +255,14 @@ export const Header = forwardRef(function Header(
             </div>
             <Link
               aria-label="Profile"
-              className="rounded-lg p-1.5 ring-primary focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-contrast-100"
+              className="@4xl:hover:bg-contrast-100 rounded-lg p-1.5 ring-primary focus-visible:outline-0 focus-visible:ring-2"
               href={accountHref}
             >
               <User className={clsx('w-5', searchOpen && 'stroke-contrast-300')} strokeWidth={1} />
             </Link>
             <Link
               aria-label="Cart"
-              className="relative rounded-lg p-1.5 ring-primary focus-visible:outline-0 focus-visible:ring-2 @4xl:hover:bg-contrast-100"
+              className="@4xl:hover:bg-contrast-100 relative rounded-lg p-1.5 ring-primary focus-visible:outline-0 focus-visible:ring-2"
               href={cartHref}
             >
               <ShoppingBag
@@ -270,7 +270,7 @@ export const Header = forwardRef(function Header(
                 strokeWidth={1}
               />
               {cartCount != null && cartCount > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-foreground text-xs text-background">
+                <span className="bg-foreground text-background absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full text-xs">
                   {cartCount}
                 </span>
               )}
@@ -280,7 +280,7 @@ export const Header = forwardRef(function Header(
             <DropdownMenu>
               <DropdownMenuTrigger
                 className={clsx(
-                  'hidden items-center gap-1 rounded-lg bg-white p-2 text-xs uppercase hover:bg-contrast-100',
+                  'hover:bg-contrast-100 hidden items-center gap-1 rounded-lg bg-white p-2 text-xs uppercase',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary @sm:flex',
                   searchOpen ? 'text-contrast-300' : 'text-foreground',
                 )}
@@ -291,11 +291,11 @@ export const Header = forwardRef(function Header(
                   strokeWidth={1.5}
                 />
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="z-50 mt-4 max-h-80 w-20 overflow-y-scroll rounded-xl bg-background p-2 shadow-[2px_4px_24px_#00000010] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 @4xl:-ml-14 @4xl:w-32 @4xl:rounded-3xl @4xl:p-4">
+              <DropdownMenuContent className="bg-background z-50 mt-4 max-h-80 w-20 overflow-y-scroll rounded-xl p-2 shadow-[2px_4px_24px_#00000010] data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 @4xl:-ml-14 @4xl:w-32 @4xl:rounded-3xl @4xl:p-4">
                 {locales?.map(({ id, language }) => (
                   <DropdownMenuItem
                     className={clsx(
-                      'cursor-default rounded-xl px-3 py-2 text-sm font-medium uppercase text-contrast-400 outline-none transition-colors',
+                      'text-contrast-400 cursor-default rounded-xl px-3 py-2 text-sm font-medium uppercase outline-none transition-colors',
                       'hover:text-foreground focus:bg-contrast-100 @4xl:text-base',
                       {
                         'text-foreground': activeLocale === language,
@@ -328,12 +328,12 @@ export const Header = forwardRef(function Header(
           className={clsx(
             'absolute inset-x-0 mx-1.5 mt-1.5 flex items-center gap-3 overflow-y-auto rounded-3xl px-3 py-4 shadow-[2px_4px_24px_#00000010] transition-all duration-300 ease-in-out @xl:px-5 @4xl:mx-5',
             searchOpen
-              ? 'scale-100 bg-background opacity-100'
+              ? 'bg-background scale-100 opacity-100'
               : 'pointer-events-none scale-[0.99] select-none bg-transparent opacity-0',
           )}
           ref={searchRef}
         >
-          <SearchIcon className="hidden w-5 shrink-0 text-contrast-500 @xl:block" strokeWidth={1} />
+          <SearchIcon className="text-contrast-500 hidden w-5 shrink-0 @xl:block" strokeWidth={1} />
           <input
             className="flex-grow bg-transparent pl-2 text-lg font-medium outline-0 @xl:pl-0"
             name="searchTerm"
@@ -344,7 +344,7 @@ export const Header = forwardRef(function Header(
           {/* Search Submit Button */}
           <button
             // formAction={searchAction}
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-foreground text-background ring-primary focus:outline-none focus:ring-[1px]"
+            className="bg-foreground text-background flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ring-primary focus:outline-none focus:ring-[1px]"
             type="submit"
           >
             <ArrowRight aria-label="Submit" size={20} strokeWidth={1.5} />
@@ -356,13 +356,13 @@ export const Header = forwardRef(function Header(
           className={clsx(
             'mx-1.5 mt-1.5 overflow-y-auto rounded-3xl shadow-[2px_4px_24px_#00000010] transition-all duration-300 ease-in-out @4xl:mx-5 @4xl:max-h-96',
             navOpen
-              ? 'scale-100 bg-background opacity-100 @4xl:h-full'
+              ? 'bg-background scale-100 opacity-100 @4xl:h-full'
               : 'pointer-events-none h-0 scale-[0.99] select-none bg-transparent opacity-0',
           )}
           ref={menuRef}
           style={{ maxHeight: `calc(100dvh - ${headerHeight}px)` }}
         >
-          <div className="flex flex-col divide-y divide-contrast-100 @4xl:hidden">
+          <div className="divide-contrast-100 flex flex-col divide-y @4xl:hidden">
             {/* Mobile Dropdown Links */}
             {links.map((item, i) => (
               <ul className="flex flex-col gap-1 p-3 @4xl:gap-2 @4xl:p-5" key={i}>
@@ -370,14 +370,14 @@ export const Header = forwardRef(function Header(
                   <li>
                     {item.href ? (
                       <Link
-                        className="block rounded-lg px-3 py-2 font-semibold ring-primary transition-colors hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2 @4xl:py-4"
+                        className="hover:bg-contrast-100 block rounded-lg px-3 py-2 font-semibold ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2 @4xl:py-4"
                         href={item.href}
                         tabIndex={navOpen ? 0 : -1}
                       >
                         {item.label}
                       </Link>
                     ) : (
-                      <span className="block rounded-lg px-3 py-2 font-semibold ring-primary transition-colors hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2 @4xl:py-4">
+                      <span className="hover:bg-contrast-100 block rounded-lg px-3 py-2 font-semibold ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2 @4xl:py-4">
                         {item.label}
                       </span>
                     )}
@@ -388,7 +388,7 @@ export const Header = forwardRef(function Header(
                   .map((link, j) => (
                     <li key={j}>
                       <Link
-                        className="block rounded-lg px-3 py-2 font-medium text-contrast-500 ring-primary transition-colors hover:bg-contrast-100 hover:text-foreground focus-visible:outline-0 focus-visible:ring-2 @4xl:py-4"
+                        className="text-contrast-500 hover:bg-contrast-100 hover:text-foreground block rounded-lg px-3 py-2 font-medium ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2 @4xl:py-4"
                         href={link.href}
                         tabIndex={navOpen ? 0 : -1}
                       >
@@ -399,7 +399,7 @@ export const Header = forwardRef(function Header(
               </ul>
             ))}
           </div>
-          <div className="hidden w-full divide-x divide-contrast-100 @4xl:grid @4xl:grid-cols-4">
+          <div className="divide-contrast-100 hidden w-full divide-x @4xl:grid @4xl:grid-cols-4">
             {/* Desktop Dropdown Links */}
             {selectedCategory !== null &&
               links[selectedCategory]?.groups?.map((group, columnIndex) => (
@@ -409,7 +409,7 @@ export const Header = forwardRef(function Header(
                     <li>
                       {group.href != null && group.href !== '' ? (
                         <Link
-                          className="block rounded-lg px-3 py-2 font-medium ring-primary transition-colors hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2"
+                          className="hover:bg-contrast-100 block rounded-lg px-3 py-2 font-medium ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2"
                           href={group.href}
                           ref={columnIndex === 0 ? firstCategoryLinkRef : undefined}
                           tabIndex={navOpen ? 0 : -1}
@@ -418,7 +418,7 @@ export const Header = forwardRef(function Header(
                         </Link>
                       ) : (
                         <span
-                          className="block rounded-lg px-3 py-2 font-medium ring-primary transition-colors hover:bg-contrast-100 focus-visible:outline-0 focus-visible:ring-2"
+                          className="hover:bg-contrast-100 block rounded-lg px-3 py-2 font-medium ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2"
                           ref={columnIndex === 0 ? firstCategoryLinkRef : undefined}
                         >
                           {group.label}
@@ -430,7 +430,7 @@ export const Header = forwardRef(function Header(
                     // Third Level Links
                     <li key={idx}>
                       <Link
-                        className="block rounded-lg px-3 py-2 font-medium text-contrast-500 ring-primary transition-colors hover:bg-contrast-100 hover:text-foreground focus-visible:outline-0 focus-visible:ring-2"
+                        className="text-contrast-500 hover:bg-contrast-100 hover:text-foreground block rounded-lg px-3 py-2 font-medium ring-primary transition-colors focus-visible:outline-0 focus-visible:ring-2"
                         href={link.href}
                         tabIndex={navOpen ? 0 : -1}
                       >
