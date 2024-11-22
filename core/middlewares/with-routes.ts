@@ -256,7 +256,7 @@ export const withRoutes: MiddlewareFactory = () => {
   return async (request, event) => {
     const locale = request.headers.get('x-bc-locale') ?? '';
 
-    const { route, status } = await getRouteInfo(request, event);
+    const { route } = await getRouteInfo(request, event);
 
     // if (status === 'MAINTENANCE') {
     //   // 503 status code not working - https://github.com/vercel/next.js/issues/50155
